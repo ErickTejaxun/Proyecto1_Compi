@@ -1,0 +1,42 @@
+<x-escenarios background=Nombre_Fondo; ancho=n; alto=n>
+<Personajes >
+<heroes>
+Rey(4,8);
+</heroes>
+<villanos>
+soldado(9,10);
+soldado(3,3);
+soldado(14,3);
+</villanos>
+</Personajes >
+<x-heroes>
+Nombre_heroe ( posicion_x, posicion_y);
+</x-heroes>
+<x-villanos>
+Nombre_villano( posicion_x, posicion_y);
+Nombre_villano ( posicion_x, posicion_y);
+</x-villanos>
+</x-personajes>
+<paredes>
+suelo1(0,11);
+suelo1(1..2,11);
+suelo1(0..2,10);
+suelo1(4,9..11);
+suelo1(5,10..11);
+suelo1(7..12,11);
+suelo1(12,11..10);
+</paredes>
+<extras>
+<armas>
+arma1(10,10);
+bomba1(1,9);
+</armas>
+<bonus>
+Diamante1(8,5);
+Diamante1(5,3);
+</bonus>
+</extras>
+<meta>
+salida1(0,2);
+<meta>
+</x-escenario>

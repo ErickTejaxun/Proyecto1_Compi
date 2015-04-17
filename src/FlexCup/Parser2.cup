@@ -1,0 +1,200 @@
+package proyecto1_compiladores;
+import java_cup.runtime.*;
+import java.util.ArrayList;
+import java.io.PrintWriter;
+import proyecto1_compiladores.Menu.path;
+import proyecto1_compiladores.sintactico2.*;
+
+parser code
+{:
+    
+	public static void main(String args[]) throws Exception{
+		//new sintactico2(new Scanner(new FileInputStream(args[0]))).parse();
+		//new sintactico2(new Scanner(System.in)).parse();
+		new sintactico2(new Scanner(new java.io.FileReader(path))).parse();
+	}
+	
+	public static String ConvertirObjectToString(Object Obj) {
+	String Str="";
+	if(Obj!=null){
+	Str = Obj.toString();
+	}
+	return Str;
+	}
+	
+	public static double ConvertirObjectToDouble(Object Obj) {
+	String Str = Obj.toString();
+	double NumDouble = Double.valueOf(Str).doubleValue();
+	return NumDouble;
+	}
+	
+	public static int ConvertirObjectToInt(Object Obj) {
+	int NumInt = Integer.parseInt(sintactico2.ConvertirObjectToString(Obj));
+	return NumInt;
+	}
+	
+        ArrayList<ListaVariables> lista=new ArrayList();
+		ArrayList<Integer> textoColor=new ArrayList();
+		public static String color="";
+		public static ArrayList<Errores> listasintactico2=new ArrayList();
+		public static String textoConsola1="";
+		public static String temporal="";
+	
+        public void syntax_error(Symbol s){
+		report_error("Error de sintaxis. Linea: " + (s.right + 1) +
+		" Columna: " + s.left + ". Texto: \"" + s.value + "\"", null);
+		Errores errorSintaxis=new Errores();
+		errorSintaxis.setTipo("sintactico2");
+		errorSintaxis.setLinea(s.right+1);
+		errorSintaxis.setColumna(s.left);
+		errorSintaxis.setDescripcion(ConvertirObjectToString(s.value));
+		sintactico2.listasintactico2.add(errorSintaxis);
+		Proyecto1_Compiladores.listasintactico2.add(errorSintaxis);
+		Menu.listasintactico2.add(errorSintaxis);
+		
+	}
+	public static String nombreObjeto="";
+	public static String direccionObjeto="";
+	public static Double vidaObjeto=0.00;
+	public static String tipoObjeto="";
+	public static String descripcionObjeto="";
+	public static Double destruccionObjeto=0.00;
+	public static Double creditoObjeto=0.00;
+	public static int tipo=0;
+	public static String  [][] tablero;
+:}
+
+
+/* Aquí especificamos los terminales del lenguaje. */
+terminal String AConfiguracion,CConfiguracion,AFondo,CFondo,APersonaje,CPersonaje,AElemento,CElemento,Nombre,Imagen,Vida,Tipo,Destruccion,Meta,Bloque,Bonus,Bomba,Arma,Heroe,Enemigo,Comillas,PuntoComa,ACorchete,CCorchete,Asignacion,Coma;
+terminal String ID,URLW,URLL,Descripcion,DescripcionP,Punto,Credito,AEscenario,Background,Ancho,Alto,APersonaje2;
+terminal String Mayor,CPersonaje2,AHeroe2,CHeroe2,AVillanos2,CVillanos2,AParedes2,CParedes2,AExtras2,CExtras2,AArmas2,CArmas2,ABonus2,
+CBonus2,AMeta2,CMeta2,CEscenario,AParentesis,CParentesis;
+terminal Double NUMERO;
+/*
+* Este terminal tiene un valor string. Recuerda que le dábamos el valor
+* en el código del analizador léxico, al darle como parámetro un valor
+* string al objeto Symbolo.
+*/
+
+
+/*
+* Aquí están los no terminales
+*/
+non terminal EXPR_DESIGN,EXPR_Atributos_Designe,EXPR_CREDITO,EXPR_NOMBRE,EXPR_DISENO,EXPR_AUXILIAR,EXPR_AUXILIAR2,EXPR_CONCATENAR;
+non terminal EXPR_VILLANOSPosicion,EXPR_Atributos_Fondo,EXPR_PERSONAJE,EXPR_IMAGEN,EXPR_VIDA,EXPR_TIPO,EXPR_DESCRIPCION,EXPR_BACKGROUND;
+non terminal EXPR_PERSONAJES2,EXPR_PAREDES2,EXPR_EXTRAS2,EXPR_META2,EXPR_AUXILIAR4,EXPR_HEROES,EXPR_VILLANOS,EXPR_BLOQUE,EXPR_DESTRUCCION,EXPR_COMA,EXPR_CONFIGURACION,EXPR_FIGURE,EXPR_Atributos_Figure,EXPR_ESCENARIO,EXPR_AUXILIAR3;
+
+/* Precedences */
+
+
+/* ­­­­­­­­­­­­­­ Declaración de la gramática  ­­­­­­­­­­­ */
+ start with EXPR_ESCENARIO;// start with sirve para indicarle al sintactico2 con que produccion empezar
+
+
+
+EXPR_ESCENARIO::= AEscenario Background Asignacion ID:nombrefondo PuntoComa Ancho Asignacion NUMERO:ancho PuntoComa Alto Asignacion NUMERO:alto Mayor EXPR_AUXILIAR3 EXPR_AUXILIAR3 EXPR_AUXILIAR3 EXPR_AUXILIAR3 CMeta2 {:Menu.imagenAUsar=nombrefondo; Menu.altura=alto.intValue(); Menu.anchura=ancho.intValue(); tablero = new String[(alto.intValue())][(ancho.intValue())]; Menu.tablero=sintactico2.tablero;:}
+				|AEscenario error {:System.out.println("Error sintactico2");:}
+				|AEscenario Background error {:System.out.println("Error sintactico2");:}
+				|AEscenario Background  Asignacion error {:System.out.println("Error sintactico2");:}
+				|AEscenario Background Asignacion ID error {:System.out.println("Error sintactico2");:}
+				|AEscenario Background Asignacion ID PuntoComa error {:System.out.println("Error sintactico2");:}
+				|AEscenario Background Asignacion ID PuntoComa Ancho error {:System.out.println("Error sintactico2");:}
+				|AEscenario Background Asignacion ID PuntoComa Ancho Asignacion error {:System.out.println("Error sintactico2");:}
+				|AEscenario Background Asignacion ID PuntoComa Ancho Asignacion NUMERO error {:System.out.println("Error sintactico2");:}
+				|AEscenario Background Asignacion ID PuntoComa Ancho Asignacion NUMERO PuntoComa error {:System.out.println("Error sintactico2");:}
+				|AEscenario Background Asignacion ID PuntoComa Ancho Asignacion NUMERO PuntoComa Alto error {:System.out.println("Error sintactico2");:}
+				|AEscenario Background Asignacion ID PuntoComa Ancho Asignacion NUMERO PuntoComa Alto  Asignacion error {:System.out.println("Error sintactico2");:}
+				|AEscenario Background Asignacion ID PuntoComa Ancho Asignacion NUMERO PuntoComa Alto  Asignacion NUMERO error {:System.out.println("Error sintactico2");:}
+				|AEscenario Background Asignacion ID PuntoComa Ancho Asignacion NUMERO PuntoComa Alto  Asignacion NUMERO Mayor error {:System.out.println("Error sintactico2");:}
+				|AEscenario Background Asignacion ID PuntoComa Ancho Asignacion NUMERO PuntoComa Alto  Asignacion NUMERO Mayor EXPR_AUXILIAR3 error {:System.out.println("Error sintactico2");:}
+				|AEscenario Background Asignacion ID PuntoComa Ancho Asignacion NUMERO PuntoComa Alto  Asignacion NUMERO Mayor EXPR_AUXILIAR3  EXPR_AUXILIAR3 error {:System.out.println("Error sintactico2");:}
+				|AEscenario Background Asignacion ID PuntoComa Ancho Asignacion NUMERO PuntoComa Alto  Asignacion NUMERO Mayor EXPR_AUXILIAR3  EXPR_AUXILIAR3  EXPR_AUXILIAR3 error {:System.out.println("Error sintactico2");:}
+				|AEscenario Background Asignacion ID PuntoComa Ancho Asignacion NUMERO PuntoComa Alto  Asignacion NUMERO Mayor EXPR_AUXILIAR3  EXPR_AUXILIAR3  EXPR_AUXILIAR3 EXPR_AUXILIAR3 error {:System.out.println("Error sintactico2");:};
+				
+EXPR_AUXILIAR3::= EXPR_PERSONAJES2
+					|EXPR_PAREDES2
+					|EXPR_EXTRAS2
+					|EXPR_META2;
+					
+EXPR_PERSONAJES2::=	APersonaje2  EXPR_AUXILIAR4 EXPR_AUXILIAR4 CPersonaje2
+				   |APersonaje2 error {:System.out.println("Error sintactico2");:}
+				   |APersonaje2 EXPR_AUXILIAR4 error {:System.out.println("Error sintactico2");:}
+				   |APersonaje2 EXPR_AUXILIAR4 EXPR_AUXILIAR4 error {:System.out.println("Error sintactico2");:};
+EXPR_AUXILIAR4::= 	EXPR_HEROES
+					|EXPR_VILLANOS;
+EXPR_HEROES::= 	AHeroe2 ID:nombreHeroe AParentesis NUMERO:x Coma NUMERO:y CParentesis PuntoComa CHeroe2{:Menu.heroeAUsar=nombreHeroe; Menu.tablero[(x.intValue())][(y.intValue())]=heroeAUsar;:}
+				|AHeroe2 error{:System.out.println("Error sintactico2");:}
+				|AHeroe2 ID error{:System.out.println("Error sintactico2");:}
+				|AHeroe2 ID AParentesis error{:System.out.println("Error sintactico2");:}
+				|AHeroe2 ID AParentesis NUMERO error{:System.out.println("Error sintactico2");:}
+				|AHeroe2 ID AParentesis NUMERO CParentesis error{:System.out.println("Error sintactico2");:}
+				|AHeroe2 ID AParentesis NUMERO CParentesis PuntoComa error{:System.out.println("Error sintactico2");:};
+
+EXPR_VILLANOS::= AVillanos2 EXPR_VILLANOSPosicion CVillanos2	
+				|AVillanos2 error {:System.out.pritnln("Error lexico");:};
+				
+EXPR_VILLANOSPosicion::= 
+				|  ID:nombreVillano AParentesis NUMERO:x Coma NUMERO:y CParentesis PuntoComa EXPR_VILLANOS {: if(Menu.tablero[(x.intValue())][(y.intValue())].equals("")){Menu.tablero[(x.intValue())][(y.intValue())]=nombreVillano;}else{
+				Errores errorLexico=new Errores();
+				errorLexico.setTipo("Semantico");
+				errorLexico.setLinea(nombreVillanoleft);
+				errorLexico.setColumna(nombreVillanoright);
+				errorLexico.setDescripcion("Casilla ocupada: No se puede colocar a " +nombreVillano);
+				Menu.listaLexico.add(errorLexico);
+				Proyecto1_Compiladores.listaLexico.add(errorLexico);
+				Menu.listaLexico=Proyecto1_Compiladores.listaLexico;}:}
+				|AVillanos2 error{:System.out.println("Error sintactico2");:}
+				|AVillanos2 ID error{:System.out.println("Error sintactico2");:}
+				|AVillanos2 ID AParentesis error{:System.out.println("Error sintactico2");:}
+				|AVillanos2 ID AParentesis NUMERO error{:System.out.println("Error sintactico2");:}
+				|AVillanos2 ID AParentesis NUMERO CParentesis error{:System.out.println("Error sintactico2");:}
+				|AVillanos2 ID AParentesis NUMERO CParentesis PuntoComa error{:System.out.println("Error sintactico2");:};					
+
+EXPR_PAREDES2::= AParedes2 EXPR_BLOQUE CParedes2
+				|AParedes2 error {:System.out.println("Error sintactico2");:};
+				
+
+EXPR_BLOQUE::= 
+				|EXPR_BLOQUE ID:bloque AParentesis NUMERO:x Coma NUMERO:y CParentesis PuntoComa {:if(Menu.tablero[(x.intValue())][(y.intValue())].equals("")){Menu.tablero[(x.intValue())][(y.intValue())]=bloque;}else{
+				Errores errorLexico=new Errores();
+				errorLexico.setTipo("Semantico");
+				errorLexico.setLinea(bloqueleft);
+				errorLexico.setColumna(bloqueright);
+				errorLexico.setDescripcion("Casilla ocupada: No se puede colocar a " +bloque);
+				Menu.listaLexico.add(errorLexico);
+				Proyecto1_Compiladores.listaLexico.add(errorLexico);
+				Menu.listaLexico=Proyecto1_Compiladores.listaLexico;}:}
+				|EXPR_BLOQUE ID:bloque AParentesis NUMERO:x Punto Punto  NUMERO:y Coma NUMERO:z CParentesis PuntoComa {:Menu.heroeAUsar=nombreHeroe; for(int m=(x.intValue());m<(y.intValue());m++){if(Menu.tablero[m][(z.intValue())].equals("")){Menu.tablero[m][(z.intValue())]=bloque;}else{
+				Errores errorLexico=new Errores();
+				errorLexico.setTipo("Semantico");
+				errorLexico.setLinea(bloqueleft);
+				errorLexico.setColumna(bloqueright);
+				errorLexico.setDescripcion("Casilla ocupada: No se puede colocar a " +bloque);
+				Scanner.listaLexico.add(errorLexico);
+				Proyecto1_Compiladores.listaLexico=Scanner.listaLexico;
+				Menu.listaLexico=Scanner.listaLexico;}}:}
+				
+				|EXPR_BLOQUE ID:bloque AParentesis NUMERO:x Coma   NUMERO:y Punto Punto  NUMERO:z CParentesis PuntoComa {: for(int m=(y.intValue());m<(z.intValue());m++{if(Menu.tablero[(x.intValue())][m].equals("")){Menu.tablero[(x.intValue())][m]=bloque;}else{
+				Errores errorLexico=new Errores();
+				errorLexico.setTipo("Semantico");
+				errorLexico.setLinea(bloqueleft);
+				errorLexico.setColumna(bloqueright);
+				errorLexico.setDescripcion("Casilla ocupada: No se puede colocar a " +bloque);
+				Menu.listaLexico.add(errorLexico);
+				Proyecto1_Compiladores.listaLexico.add(errorLexico);
+				Menu.listaLexico=Proyecto1_Compiladores.listaLexico;}:}				
+				| EXPR_BLOQUE ID:bloque AParentesis NUMERO:x Punto Punto NUMERO:w Coma NUMERO:y Punto Punto  NUMERO:z CParentesis PuntoComa{: for(int n=(y.intValue());n<(z.intValue());n++{for(int m=(x.intValue());m<(w.intValue());m++{if(Menu.tablero[m][n].equals("")){Menu.tablero[(x.intValue())][m]=bloque;}else{
+				Errores errorLexico=new Errores();
+				errorLexico.setTipo("Semantico");
+				errorLexico.setLinea(bloqueleft);
+				errorLexico.setColumna(bloqueright);
+				errorLexico.setDescripcion("Casilla ocupada: No se puede colocar a " +bloque);
+				Menu.listaLexico.add(errorLexico);
+				Proyecto1_Compiladores.listaLexico.add(errorLexico);
+				Menu.listaLexico=Proyecto1_Compiladores.listaLexico;}:};
+				
+EXPR_EXTRAS2::= AExtras2 EXPR_BLOQUE CExtras2
+				|AExtras2 error{:System.out.println("Error sintactico2");:};
+EXPR_META2::= AMeta2 EXPR_BLOQUE CMeta2
+			 |AMeta2 error{:System.out.println("Error sintactico2");:};
